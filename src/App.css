@@ -9,21 +9,3 @@
 .btn-toggle {display: flex; justify-content: center; align-items: center;width: 60px; height: 60px; border: 0; cursor: pointer; background: #fff; border-radius: 50%;}
 .btn-toggle.hide {opacity: .4;}
 .btn-toggle img {width: 100%; height: 100%;}
-
-.icon-container {
-  position: absolute;
-  overflow: hidden;
-  box-sizing: content-box;
-  cursor: inherit;
-  width: 24px; /* div 크기 */
-  height: 24px; /* div 크기 */
-}
-
-.icon-container img {
-  width: 24px; /* 이미지 크기 설정 */
-  height: 24px; /* 이미지 크기 설정 */
-  display: block;
-  user-select: none;
-  -webkit-user-drag: none;
-  object-fit: cover; /* 이미지가 div 크기에 맞게 조정되도록 함 */
-}
