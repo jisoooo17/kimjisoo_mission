@@ -1,5 +1,11 @@
-.App {
-  text-align: center;
-}
+* {margin: 0; padding: 0; box-sizing: border-box;}
+.App {text-align: center;}
 
-.map {width: 80%; height: 500px;}
+.wrap {margin: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.113);}
+.map {width: 100%; height: 500px; border: 1px solid #ddd; border-radius: 4px;}
+.btn-area {display: flex; justify-content: center; margin-top: 30px;}
+.btn-area .btn-w + .btn-w {margin-left: 12px;}
+.btn-area .btn-w .txt {margin-top: 4px; text-align: center; font-size: 14px;}
+.btn-toggle {display: flex; justify-content: center; align-items: center;width: 60px; height: 60px; border: 0; cursor: pointer; background: #fff; border-radius: 50%;}
+.btn-toggle.hide {opacity: .4;}
+.btn-toggle img {width: 100%; height: 100%;}
