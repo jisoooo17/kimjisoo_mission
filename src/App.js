@@ -3,32 +3,31 @@ import './App.css';
 import axios from 'axios';
 
 function App() {
-  const mapEl = useRef(null); // 지도 엘리먼트 참조
-  const { naver } = window; 
+  let mapEl = useRef(null); // 지도 엘리먼트 참조
+  let { naver } = window; 
 
-  const [data, setData] = useState([]); // 서버에서 가져온 데이터 저장
-  const [markers, setMarkers] = useState([]); // 지도에 표시된 마커들 저장
-  const [visMarkers, setVisMarkers] = useState(new Set()); // 현재 보이는 마커의 타입 저장
-  const [map, setMap] = useState(null); // 네이버 지도 객체 저장
+  let [data, setData] = useState([]); // 서버에서 가져온 데이터 저장
+  let [markers, setMarkers] = useState([]); // 지도에 표시된 마커들 저장
+  let [visMarkers, setVisMarkers] = useState(new Set()); // 현재 보이는 마커의 타입 저장
+  let [map, setMap] = useState(null); // 네이버 지도 객체 저장
 
-  // 버튼 요소들에 대한 참조
-  const btnRefs = useRef({});
+  let btnRefs = useRef({});
 
   useEffect(() => {
     if (!mapEl.current || !naver) return;
 
     // 지도 중심 좌표
-    const location = new naver.maps.LatLng(37.5358994, 126.8969627);
+    let location = new naver.maps.LatLng(37.5358994, 126.8969627);
     
     // 지도 옵션
-    const mapOptions = {
+    let mapOptions = {
       center: location, 
       zoom: 17, 
       zoomControl: false,
     };
 
     // 네이버 지도 생성하여 mapInstance에 저장
-    const mapInstance = new naver.maps.Map(mapEl.current, mapOptions);
+    let mapInstance = new naver.maps.Map(mapEl.current, mapOptions);
     setMap(mapInstance); 
 
     // 기본 마커
@@ -51,7 +50,7 @@ function App() {
   }, [naver]); 
 
   // 아이콘 URL 설정
-  const iconUrls = {
+  let iconUrls = {
     PIN: process.env.PUBLIC_URL + '/img/icon-pin.png',
     CAFE: process.env.PUBLIC_URL + '/img/icon-cafe.png',
     FOOD: process.env.PUBLIC_URL + '/img/icon-cutlery.png',
@@ -60,8 +59,8 @@ function App() {
   };
 
   // 모든 타입의 마커를 표시하는 함수
-  const showMarkers = (data, mapInstance) => {
-    const newMarkers = data.map((item) => {
+  let showMarkers = (data, mapInstance) => {
+    let newMarkers = data.map((item) => {
       return new naver.maps.Marker({
         position: new naver.maps.LatLng(item.lat, item.lng),
         map: mapInstance,
@@ -79,7 +78,7 @@ function App() {
     newMarkers.forEach(marker => marker.setMap(mapInstance));
   };
   
-  const createCustomMarker = (url, size) => {
+  let createCustomMarker = (url, size) => {
     return {
       content: `
         <div style="width: ${size.width}px; height: ${size.height}px; overflow: hidden;">
@@ -92,9 +91,9 @@ function App() {
   };
   
   // 버튼 클릭 시 특정 타입의 마커를 토글하는 함수
-  const handleBtnClk = (type) => {
+  let handleBtnClk = (type) => {
     setVisMarkers((prev) => {
-      const newVisMarkers = new Set(prev); 
+      let newVisMarkers = new Set(prev); 
 
       if (newVisMarkers.has(type)) {
         // 클릭한 타입이 이미 존재하면, 제거하고 마커와 버튼 이미지를 숨김
