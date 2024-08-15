@@ -4,14 +4,14 @@ import axios from 'axios';
 
 function App() {
   const mapEl = useRef(null); // 지도 엘리먼트 참조
-  const { naver } = window; // 전역 객체에서 네이버 API를 가져옴
+  const { naver } = window; 
 
   const [data, setData] = useState([]); // 서버에서 가져온 데이터 저장
   const [markers, setMarkers] = useState([]); // 지도에 표시된 마커들 저장
   const [visMarkers, setVisMarkers] = useState(new Set()); // 현재 보이는 마커의 타입 저장
   const [map, setMap] = useState(null); // 네이버 지도 객체 저장
 
-  // 버튼 요소들에 대한 참조 저장
+  // 버튼 요소들에 대한 참조
   const btnRefs = useRef({});
 
   useEffect(() => {
@@ -35,38 +35,62 @@ function App() {
     new naver.maps.Marker({
       position: location,
       map: mapInstance,
+      icon: createCustomMarker(
+        iconUrls.PIN,
+        { width: 40, height: 40 }
+      ),
     });
 
     // 서버로부터 데이터 가져옴
     axios.get('https://apiy.yourpick.co.kr/mission/test001')
       .then((res) => {
         setData(res.data); 
-        showMarkers(res.data, mapInstance); // 모든 마커를 지도에 표시
+        showMarkers(res.data, mapInstance); 
       })
       .catch((err) => { console.log(err); }); 
   }, [naver]); 
 
-   // 모든 타입의 마커를 표시하는 함수
+  // 아이콘 URL 설정
+  const iconUrls = {
+    PIN: process.env.PUBLIC_URL + '/img/icon-pin.png',
+    CAFE: process.env.PUBLIC_URL + '/img/icon-cafe.png',
+    FOOD: process.env.PUBLIC_URL + '/img/icon-cutlery.png',
+    MART: process.env.PUBLIC_URL + '/img/icon-store.png',
+    PHARMACY: process.env.PUBLIC_URL + '/img/icon-medicine.png',
+  };
+
+  // 모든 타입의 마커를 표시하는 함수
   const showMarkers = (data, mapInstance) => {
-    
-    // 타입별 마커 생성 및 지도에 표시
     const newMarkers = data.map((item) => {
       return new naver.maps.Marker({
-        position: new naver.maps.LatLng(item.lat, item.lng), 
-        map: mapInstance, 
-        title: item.name, 
-        type: item.type  
+        position: new naver.maps.LatLng(item.lat, item.lng),
+        map: mapInstance,
+        title: item.name,
+        type: item.type,
+        icon: createCustomMarker(
+          iconUrls[item.type],
+          { width: 30, height: 30 } 
+        ),
       });
     });
-    
+  
     setMarkers(newMarkers);
-
-    // 초기 상태에서는 모든 마커 보이도록 설정
     setVisMarkers(new Set(data.map((item) => item.type)));
-    newMarkers.forEach(marker => marker.setMap(mapInstance)); // 모든 마커 지도에 표시
-
-  }
-
+    newMarkers.forEach(marker => marker.setMap(mapInstance));
+  };
+  
+  const createCustomMarker = (url, size) => {
+    return {
+      content: `
+        <div style="width: ${size.width}px; height: ${size.height}px; overflow: hidden;">
+          <img src="${url}" style="width: 100%; height: 100%;"/>
+        </div>
+      `,
+      size: new naver.maps.Size(size.width, size.height),
+      anchor: new naver.maps.Point(size.width / 2, size.height),
+    };
+  };
+  
   // 버튼 클릭 시 특정 타입의 마커를 토글하는 함수
   const handleBtnClk = (type) => {
     setVisMarkers((prev) => {
