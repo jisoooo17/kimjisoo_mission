@@ -78,6 +78,7 @@ function App() {
     newMarkers.forEach(marker => marker.setMap(mapInstance));
   };
   
+  // 커스텀 마커
   let createCustomMarker = (url, size) => {
     return {
       content: `
