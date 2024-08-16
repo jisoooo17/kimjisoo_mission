@@ -6,6 +6,6 @@
 .btn-area {display: flex; justify-content: center; margin-top: 30px;}
 .btn-area .btn-w + .btn-w {margin-left: 12px;}
 .btn-area .btn-w .txt {margin-top: 4px; text-align: center; font-size: 14px;}
-.btn-toggle {display: flex; justify-content: center; align-items: center;width: 60px; height: 60px; border: 0; cursor: pointer; background: #fff; border-radius: 50%;}
+.btn-toggle {display: flex; justify-content: center; align-items: center;width: 60px; height: 60px; border: 0; cursor: pointer; background: #fff; border-radius: 50%; transition: opacity .2s;}
 .btn-toggle.hide {opacity: .4;}
 .btn-toggle img {width: 100%; height: 100%;}
